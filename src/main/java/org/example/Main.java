@@ -30,13 +30,14 @@ public class Main {
         if (!Files.exists(dir)) {
             Files.createDirectory(dir);
         }
+        double[] minsCountWrapper = new double[1];
         for (Map.Entry<String, List<String>> client : clients.entrySet()) {
             File file = dir.resolve("Report for " + client.getKey()).toFile();
             try (Writer writer = new BufferedWriter(new FileWriter(file))) {
                 String tariff = client.getValue().get(0).substring(36);
                 printHeader(client.getKey(), writer, tariff);
                 client.getValue().sort(Comparator.comparing(o -> o.substring(4, 18)));
-                double[] minsCountWrapper = new double[]{0.0};
+                minsCountWrapper[0] = 0.0;
                 double sum = 0;
                 List<String> value = client.getValue();
                 for (int i = 0; i < value.size(); i++) {
